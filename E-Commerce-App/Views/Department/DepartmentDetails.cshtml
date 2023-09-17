@@ -1,0 +1,46 @@
+﻿@model E_Commerce_App.Models.Department
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserInterface> SignInManager
+@{
+    ViewData["Title"] = "Department Details";
+}
+
+<div class="d-flex align-items-center justify-content-between px-3">
+    <h1>DepartmentDetails</h1>
+
+    <a asp-action="Departments" class="text-decoration-none previous text-light btn btn-danger"
+
+       asp-route-categoryId="@Model.CategoryID">
+
+        &laquo Back to List
+    </a>
+</div>
+<div>
+    <h4 class="card-title">@Html.DisplayFor(model => model.Name)</h4>
+
+</div>
+
+<div class="card text-dark p-4 position-absolute top-50 start-50 translate-middle bg-gradient border-0">
+    <div class="crad-img py-2 bg-light rounded-4 mb-2 mt-3">
+        <img src="@Html.DisplayFor(model=> model.ImageURL)" class="card-img-top" alt="Image Alt Text" style="height:12rem;">
+    </div>
+    <div class="card-title d-flex">
+        <h5 class="card-title me-2 fw-bold">@Html.DisplayNameFor(model => model.Name):</h5>
+        <p class="card-text fw-medium">@Html.DisplayFor(model => model.Name)</p>
+    </div>
+    <div class="d-flex justify-content-center">
+        @if ((User.HasClaim(c => c.Type == "permissions" && c.Value == "update")) && User.IsInRole("User"))
+        {
+            @Html.ActionLink("Edit", "EditCategory", new { ID = Model.ID})
+        }
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="DeleteCategory" class="text-decoration-none btn btn-danger" asp-route-id="@Model.ID">Delete</a>
+        }
+    </div>
+
+
+</div>
+
+

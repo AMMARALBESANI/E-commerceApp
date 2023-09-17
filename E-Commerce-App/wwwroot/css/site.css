@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap');
+:root {
+    --white-light: rgba(255, 255, 255, 0.5);
+    --alice-blue: #272929;
+    --warning: #d0f4ea;
+    --carribean-green: #40c9a2;
+    --gray: #ededed;
+}
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    
+}
+/* Add CSS styles for the content div */
+#content {
+    width:100%;
+    text-align: center;
+    padding: 100px; /* Adjust as needed */
+    color: white; /* Text color on top of the image */
+}
+
+.cont {
+    /* Add your background image URL and other CSS properties here */
+    background-image: url('https://lab29images.blob.core.windows.net/images/ee.jpg');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* To make it fixed */
+    width: 100%;
+    z-index: -1;
+    /* You can also specify background position, color, and other styles here */
+}
+
+
+
+.card img {
+    transition: transform 0.9s ease !important;
+    
+}
+
+
+
+.card:hover img {
+    transform: scale(1.1) !important;
+   
+}
+
+.text-warning {
+    color: var(--warning) !important;
+}
+
+.bg-warning {
+    background-color: var(--warning) !important;
+}
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #212529;
+    border-top: 1px solid #DEE2E6;
+    text-align: center;
+    padding: 15px;
+}
+
+
