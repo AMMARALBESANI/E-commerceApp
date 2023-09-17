@@ -10,7 +10,6 @@
       "type": "identityapp"
     },
     "mssql1": {
-      "ignored": "true",
       "type": "mssql",
       "connectionId": "ConnectionStrings:DefaultConnection"
     }
