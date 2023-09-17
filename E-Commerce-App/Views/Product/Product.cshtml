@@ -8,16 +8,15 @@
     var departmentName = Model.FirstOrDefault()?.Department.Name;
 }
 <div class="products">
-    <div class="container">
+    <div class="container d-flex flex-column">
+        <div class="d-flex justify-content-end ">
         @if (User.IsInRole("Admin"))
         {
-            <a class="btn btn-success mx-2" asp-controller="Product" asp-action="AddProduct" asp-route-departmentID="@departmentId">Add </a>
-
-
+                <a class="btn btn-success my-3 me-3" asp-controller="Product" asp-action="AddProduct" asp-route-departmentID="@departmentId">Add </a>
         }
 
-        <a class="btn btn-success mx-2" asp-controller="Category" asp-action="Index">Back</a>
-
+        <a asp-controller ="Category" asp-action="Index" class="my-3 me-3 text-decoration-none previous btn btn-danger "> <i class="fa-solid fa-caret-left me-2"></i> Categories</a>
+        </div>
         <h1 class="lg-title text-white">Special @departmentName With Offers</h1>
         <p class="text-center col-8 mx-auto my-1 text-white">A new Products of All categories now is available and on sale up to 35% what are you waiting ? come on and choose your Product plant and buy it </p>
         <div class="product-items">
