@@ -20,7 +20,7 @@
 @* @Html.ActionLink("Back", "product", new { departmentId = Model?.DepartmentID}) *@
 <div id="accountContainer"
      class="container ">
-    <a asp-controller="Category" asp-action="Index" class="float-end my-3 me-3 text-decoration-none previous btn btn-danger">
+    <a asp-controller="Product" asp-action="Product" asp-route-departmentID="@Model.DepartmentID" class="float-end my-3 me-3 text-decoration-none previous btn btn-danger">
         <i class="fa-solid fa-caret-left me-2"></i> Products
     </a>
 
