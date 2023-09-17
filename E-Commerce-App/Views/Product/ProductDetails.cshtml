@@ -20,104 +20,104 @@
 @* @Html.ActionLink("Back", "product", new { departmentId = Model?.DepartmentID}) *@
 <div id="accountContainer"
      class="container ">
-    <a asp-controller="Product" asp-action="product" asp-route-departmentID="@Model.DepartmentID"
-       class="float-end my-3 me-3 text-decoration-none previous btn btn-danger"
-       asp-route-departmentID="@Model.DepartmentID"> <i class="fa-solid fa-caret-left me-2"></i> Products</a>
+    <a asp-controller="Category" asp-action="Index" class="float-end my-3 me-3 text-decoration-none previous btn btn-danger">
+        <i class="fa-solid fa-caret-left me-2"></i> Products
+    </a>
 
     <div class="products d-flex flex-column justify-content-center align-items-center mx-auto">
 
 
 
-    <div class="product col-10 col-md-6 col-lg-4">
-        <div class="product-content">
-            <div class="product-img col-4">
-                @if (Model.ImageURL != null)
+        <div class="product col-10 col-md-6 col-lg-4">
+            <div class="product-content">
+                <div class="product-img col-4">
+                    @if (Model.ImageURL != null)
+                    {
+                        <img src="@Model.ImageURL" alt="@Model.Name">
+                    }
+                    else
+                    {
+                        <img src="https://lab29images.blob.core.windows.net/images/defaultImage.png" alt="@@Model.Name" />
+                    }
+
+                </div>
+                <div class="product-btns">
+
+                    @if ((User.HasClaim(c => c.Type == "permissions" && c.Value == "update")) && User.IsInRole("User"))
+                    {
+                        <a asp-action="EditProduct" asp-route-ID="@Model.ID" type="button" class="btn-cart">
+                            Edit
+                            <span><i class="fa-regular fa-pen-to-square"></i></span>
+                        </a>
+                        @* @Html.ActionLink("Edit", "EditProduct", new { ID = Model?.ID }) *@
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a type="button" class="btn-cart d-flex justify-content-evenly align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <span>Delete</span>
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+
+
+                    }
+
+                </div>
+            </div>
+
+            <div class="product-info">
+                <div class="product-info-top d-flex align-items-center mb-1">
+                    <h2 class="sm-title mb-0">@Model.Department.Name</h2>
+                    <div class="rating">
+                        <span><i class="fas fa-star"></i></span>
+                        <span><i class="fas fa-star"></i></span>
+                        <span><i class="fas fa-star"></i></span>
+                        <span><i class="far fa-star"></i></span>
+                        <span><i class="far fa-star"></i></span>
+                    </div>
+                </div>
+                <a href="#" class="product-name">@Model.Name</a>
+                @if (Model.Price >= 30 && Model.Discount != null)
                 {
-                    <img src="@Model.ImageURL" alt="@Model.Name">
+                    totalPrice = Model.Price - Convert.ToInt32(Model.Price * Model.Discount / 100);
+                    <p class="product-price">$@Model.Price</p>
+                    <p class="product-price">$@totalPrice</p>
                 }
                 else
                 {
-                    <img src="https://lab29images.blob.core.windows.net/images/defaultImage.png" alt="@@Model.Name" />
+                    totalPrice = @Model.Price;
+                    <p class="product-price1">$@totalPrice</p>
                 }
 
             </div>
-            <div class="product-btns">
+            @if (Model.Discount != null && Model.Discount > 0)
+            {
 
-                @if ((User.HasClaim(c => c.Type == "permissions" && c.Value == "update")) && User.IsInRole("User"))
-                {
-                    <a asp-action="EditProduct" asp-route-ID="@Model.ID" type="button" class="btn-cart">
-                        Edit
-                        <span><i class="fa-regular fa-pen-to-square"></i></span>
-                    </a>
-                    @* @Html.ActionLink("Edit", "EditProduct", new { ID = Model?.ID }) *@
-                }
-                @if (User.IsInRole("Admin"))
-                {
-                    <a type="button" class="btn-cart d-flex justify-content-evenly align-items-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <span>Delete</span>
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-
-
-                }
-
-            </div>
-        </div>
-
-        <div class="product-info">
-            <div class="product-info-top d-flex align-items-center mb-1">
-                <h2 class="sm-title mb-0">@Model.Department.Name</h2>
-                <div class="rating">
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="fas fa-star"></i></span>
-                    <span><i class="far fa-star"></i></span>
-                    <span><i class="far fa-star"></i></span>
+                <div class="off-info">
+                    <h2 class="sm-title">@Model.Discount% off</h2>
                 </div>
-            </div>
-            <a href="#" class="product-name">@Model.Name</a>
-            @if (Model.Price >= 30 && Model.Discount != null)
-            {
-                totalPrice = Model.Price - Convert.ToInt32(Model.Price * Model.Discount / 100);
-                <p class="product-price">$@Model.Price</p>
-                <p class="product-price">$@totalPrice</p>
             }
-            else
-            {
-                totalPrice = @Model.Price;
-                <p class="product-price1">$@totalPrice</p>
-            }
+
 
         </div>
-        @if (Model.Discount != null && Model.Discount > 0)
-        {
-
-            <div class="off-info">
-                <h2 class="sm-title">@Model.Discount% off</h2>
-            </div>
-        }
-
-
     </div>
-</div>
-@*
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    @*
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are You sure you want to Delete this product @Model.Name ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <a type="button" class="btn btn-primary" asp-action="DeleteProduct" asp-route-id="@Model.ID">Yes</a>
-            </div>
-        </div>
+    <div class="modal-content">
+    <div class="modal-header">
+    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
-</div>
- *@
+    <div class="modal-body">
+    Are You sure you want to Delete this product @Model.Name ?
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+    <a type="button" class="btn btn-primary" asp-action="DeleteProduct" asp-route-id="@Model.ID">Yes</a>
+    </div>
+    </div>
+    </div>
+    </div>
+    *@
 </div>
 @await Html.PartialAsync("_DeleteProductModal")
