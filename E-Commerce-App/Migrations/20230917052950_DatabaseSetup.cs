@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace E_Commerce_App.Migrations
 {
     /// <inheritdoc />
-    public partial class NewSEtupForAllTables : Migration
+    public partial class DatabaseSetup : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -219,6 +219,7 @@ namespace E_Commerce_App.Migrations
                     Price = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     DepartmentID = table.Column<int>(type: "int", nullable: false),
+                    Discount = table.Column<double>(type: "float", nullable: true),
                     ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -281,21 +282,21 @@ namespace E_Commerce_App.Migrations
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "ID", "DepartmentID", "ImageURL", "Name", "Price", "Quantity" },
+                columns: new[] { "ID", "DepartmentID", "Discount", "ImageURL", "Name", "Price", "Quantity" },
                 values: new object[,]
                 {
-                    { 1, 1, null, "Samsung", 350, 23 },
-                    { 2, 1, null, "LG", 300, 40 },
-                    { 3, 2, null, "Beko", 250, 50 },
-                    { 4, 2, null, "Toshiba", 280, 40 },
-                    { 5, 3, null, "4 Person lunch Table", 40, 100 },
-                    { 6, 3, null, "8 Person lunch table", 70, 100 },
-                    { 7, 4, null, "Teval Pan", 20, 45 },
-                    { 8, 4, null, "Dishes", 15, 100 },
-                    { 9, 5, null, "Sheep meat", 15, 110 },
-                    { 10, 5, null, "Beef", 10, 80 },
-                    { 11, 6, null, "Sunny frying oil", 10, 80 },
-                    { 12, 6, null, "Durra Bean Box 500g", 1, 48 }
+                    { 1, 1, null, null, "Samsung", 350, 23 },
+                    { 2, 1, null, null, "LG", 300, 40 },
+                    { 3, 2, null, null, "Beko", 250, 50 },
+                    { 4, 2, null, null, "Toshiba", 280, 40 },
+                    { 5, 3, null, null, "4 Person lunch Table", 40, 100 },
+                    { 6, 3, null, null, "8 Person lunch table", 70, 100 },
+                    { 7, 4, null, null, "Teval Pan", 20, 45 },
+                    { 8, 4, null, null, "Dishes", 15, 100 },
+                    { 9, 5, null, null, "Sheep meat", 15, 110 },
+                    { 10, 5, null, null, "Beef", 10, 80 },
+                    { 11, 6, null, null, "Sunny frying oil", 10, 80 },
+                    { 12, 6, null, null, "Durra Bean Box 500g", 1, 48 }
                 });
 
             migrationBuilder.CreateIndex(
