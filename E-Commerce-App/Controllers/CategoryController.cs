@@ -57,8 +57,12 @@ namespace E_Commerce_App.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddCategory(Category category)
+        public async Task<IActionResult> AddCategory(Category category, IFormFile file)
         {
+            if (file != null)
+            {
+                await _addImage.UploadImage(file, category);
+            }
             await _category.CreateCategory(category);
             return RedirectToAction("Index", "Category");
         }
