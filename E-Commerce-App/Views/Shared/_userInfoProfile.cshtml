@@ -1,12 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<UserInterface> SignInManager
 
-@if (SignInManager.IsSignedIn(User))
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{ 
+    <div class="d-inline-flex ">
+        <a class="btn btn-light ms-lg-3 mt-2 py-o mt-lg-0 btn-sm text-decoration-none px-3" href="/user/AddAdmin">Add</a>
+    <a class="btn btn-primary btn-sm text-decoration-none ms-3 mt-2 mt-lg-0" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+    </div>
+}
+else if (SignInManager.IsSignedIn(User) )
 {
+
     <div class="p-1 text-light d-flex flex-column flex-md-row align-items-center ">
         <span>Welcome @User.Identity.Name!</span>
         <a class="btn btn-primary btn-sm text-decoration-none ms-lg-3  mt-2 mt-lg-0" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
     </div>
+
+    
+
 }
 else
 {

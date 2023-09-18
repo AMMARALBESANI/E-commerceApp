@@ -24,6 +24,8 @@ namespace E_Commerce_App.Controllers
             _addImage = addImage;
         }
 
+
+        [AllowAnonymous]
         public async Task<IActionResult> Departments(int categoryId)
         {
             var x = await _department.GetDepartments(categoryId);
@@ -31,6 +33,7 @@ namespace E_Commerce_App.Controllers
             return View(x);
         }
 
+        [AllowAnonymous]
 
         public async Task<IActionResult> DepartmentDetails(int departmentId)
         {

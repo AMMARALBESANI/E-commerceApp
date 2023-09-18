@@ -16,14 +16,16 @@ namespace E_Commerce_App.Controllers
             _addImage = addImage;
         }
 
-        
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var categories = await _category.GetCategories();
             return View(categories);
         }
 
-        public async Task<IActionResult> CategoryDetails(int id)
+		[AllowAnonymous]
+		public async Task<IActionResult> CategoryDetails(int id)
         {
             var category = await _category.GetCategoryById(id);
 

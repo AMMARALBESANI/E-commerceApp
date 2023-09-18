@@ -17,7 +17,7 @@
     @* <link rel="stylesheet" href="~/E_Commerce_App.styles.css" asp-append-version="true" /> *@
 </head>
 <body class="m-0">
-    <header class="bg-dark m-0 text-light border-0">
+    <header class="bg-dark m-0 text-light border-0 container-fluid">
         <nav class="navbar navbar-expand-md navbar-light bg-primary-subtle box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">E_Commerce_App</a>
@@ -54,13 +54,13 @@
             </div>
         </nav>
     </header>
-    <div class="bg-secondary min-vh-100 justify-content-center border-0">
+    <div class="bg-secondary min-vh-100 justify-content-center border-0 container-fluid pt-2 pt-sm-5">
 
         <main role="main">
             @RenderBody()
         </main>
     </div>
-    <footer class=" footer bg-dark text-light text-center py-3 border-0">
+    <footer class=" footer bg-dark text-light text-center py-3border-0">
         <div class="container">
             <p>&copy; 2023 Your Website. All rights reserved.</p>
         </div>

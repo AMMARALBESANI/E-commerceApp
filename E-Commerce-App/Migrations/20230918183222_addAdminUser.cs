@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace E_Commerce_App.Migrations
 {
     /// <inheritdoc />
-    public partial class DatabaseSetup : Migration
+    public partial class addAdminUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -239,8 +239,14 @@ namespace E_Commerce_App.Migrations
                 values: new object[,]
                 {
                     { "admin", "00000000-0000-0000-0000-000000000000", "Admin", "ADMIN" },
+                    { "costumer", "00000000-0000-0000-0000-000000000000", "costumer", "COSTUMER" },
                     { "user", "00000000-0000-0000-0000-000000000000", "User", "USER" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1", 0, "25017dc3-f039-4a44-8660-8d8053a4ba5a", "adminUser@example.com", true, false, null, "adminUser@EXAMPLE.COM", "ADMIN", "AQAAAAIAAYagAAAAED9aHAaSJsHdZDgrmFzs6BYNsU7bf/TaJIQUGV9xoDkfxuWwHWlAdrWuOAoPCRi/Qw==", "1234567890", false, "e41979f5-b5ea-41d2-85c0-2c10eea227a9", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Category",
@@ -257,15 +263,21 @@ namespace E_Commerce_App.Migrations
                 columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
                 values: new object[,]
                 {
-                    { 9, "permissions", "create", "admin" },
-                    { 10, "permissions", "update", "admin" },
-                    { 11, "permissions", "delete", "admin" },
-                    { 12, "permissions", "read", "admin" },
-                    { 13, "permissions", "create", "user" },
-                    { 14, "permissions", "update", "user" },
-                    { 15, "permissions", "delete", "user" },
-                    { 16, "permissions", "read", "user" }
+                    { 10, "permissions", "create", "admin" },
+                    { 11, "permissions", "update", "admin" },
+                    { 12, "permissions", "delete", "admin" },
+                    { 13, "permissions", "read", "admin" },
+                    { 14, "permissions", "create", "user" },
+                    { 15, "permissions", "update", "user" },
+                    { 16, "permissions", "delete", "user" },
+                    { 17, "permissions", "read", "user" },
+                    { 18, "permissions", "read", "costumer" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "Admin", "1" });
 
             migrationBuilder.InsertData(
                 table: "Department",
