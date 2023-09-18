@@ -101,14 +101,24 @@ namespace E_Commerce_App.Controllers
 			return View();
 		}
 
-		/// <summary>
-		/// Register a new user.
-		/// </summary>
-		/// <param name="Data">Registration data for the new user.</param>
-		[HttpPost("Register")]
+        public IActionResult AddAdmin()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Register a new user.
+        /// </summary>
+        /// <param name="Data">Registration data for the new user.</param>
+        [HttpPost("Register")]
 		public async Task<ActionResult<UserDTO>> Register(RegisterUserDTO Data)
 		{
-			//Data.Roles = "Admin";
+
+			if (Data.Roles == null)
+			{
+                Data.Roles = "costumer";
+            }
+			
 			var user = await _user.Register(Data, this.ModelState);
 
 			if (user != null)

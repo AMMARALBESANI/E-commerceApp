@@ -191,20 +191,23 @@ namespace E_Commerce_App.Data
                 EmailConfirmed = true,
                 LockoutEnabled = false
             };
-            //Admin.PasswordHash = hasher.HashPassword(Admin, "Admin@1+");
+            Admin.PasswordHash = hasher.HashPassword(Admin, "Admin@1+");
 
-            //modelBuilder.Entity<UserInterface>().HasData(Admin);
+            modelBuilder.Entity<UserInterface>().HasData(Admin);
 
-            //List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>()
-            // {
-            //new IdentityUserRole<string> { UserId ="1" , RoleId = "admin" }
-    
-            //  };
-            //modelBuilder.Entity<IdentityUserRole<string>>().HasData(userRoles);
+            var adminRoleId = "Admin"; 
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                UserId = Admin.Id,
+                RoleId = adminRoleId
+            });
+
 
             seedRole(modelBuilder, "Admin", "create", "update", "delete", "read");
 
             seedRole(modelBuilder, "User", "create", "update", "delete", "read");
+
+            seedRole(modelBuilder, "costumer","read");
         }
         int nextId = 1;
         private void seedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)

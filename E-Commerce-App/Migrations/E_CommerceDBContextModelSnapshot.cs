@@ -17,7 +17,7 @@ namespace E_Commerce_App.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -343,6 +343,25 @@ namespace E_Commerce_App.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "25017dc3-f039-4a44-8660-8d8053a4ba5a",
+                            Email = "adminUser@example.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "adminUser@EXAMPLE.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAED9aHAaSJsHdZDgrmFzs6BYNsU7bf/TaJIQUGV9xoDkfxuWwHWlAdrWuOAoPCRi/Qw==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e41979f5-b5ea-41d2-85c0-2c10eea227a9",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -385,6 +404,13 @@ namespace E_Commerce_App.Migrations
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
                             Name = "User",
                             NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "costumer",
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "costumer",
+                            NormalizedName = "COSTUMER"
                         });
                 });
 
@@ -415,59 +441,66 @@ namespace E_Commerce_App.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 9,
-                            ClaimType = "permissions",
-                            ClaimValue = "create",
-                            RoleId = "admin"
-                        },
-                        new
-                        {
                             Id = 10,
                             ClaimType = "permissions",
-                            ClaimValue = "update",
+                            ClaimValue = "create",
                             RoleId = "admin"
                         },
                         new
                         {
                             Id = 11,
                             ClaimType = "permissions",
-                            ClaimValue = "delete",
+                            ClaimValue = "update",
                             RoleId = "admin"
                         },
                         new
                         {
                             Id = 12,
                             ClaimType = "permissions",
-                            ClaimValue = "read",
+                            ClaimValue = "delete",
                             RoleId = "admin"
                         },
                         new
                         {
                             Id = 13,
                             ClaimType = "permissions",
-                            ClaimValue = "create",
-                            RoleId = "user"
+                            ClaimValue = "read",
+                            RoleId = "admin"
                         },
                         new
                         {
                             Id = 14,
                             ClaimType = "permissions",
-                            ClaimValue = "update",
+                            ClaimValue = "create",
                             RoleId = "user"
                         },
                         new
                         {
                             Id = 15,
                             ClaimType = "permissions",
-                            ClaimValue = "delete",
+                            ClaimValue = "update",
                             RoleId = "user"
                         },
                         new
                         {
                             Id = 16,
                             ClaimType = "permissions",
+                            ClaimValue = "delete",
+                            RoleId = "user"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ClaimType = "permissions",
                             ClaimValue = "read",
                             RoleId = "user"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ClaimType = "permissions",
+                            ClaimValue = "read",
+                            RoleId = "costumer"
                         });
                 });
 
@@ -531,6 +564,13 @@ namespace E_Commerce_App.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -21,7 +21,7 @@ namespace E_Commerce_App.Controllers
 
         }
 
-
+        [Authorize]
         public async Task<IActionResult> product(int departmentID)
         {
             var productsDTO = await _product.GetAllProductAsync(departmentID);
@@ -71,6 +71,7 @@ namespace E_Commerce_App.Controllers
             return RedirectToAction("product", new { departmentID = product.DepartmentID });
         }
 
+        [Authorize]
         public async Task<IActionResult> ProductDetails(int id)
         {
             var product = await _product.GetProductAsync(id);
