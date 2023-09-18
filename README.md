@@ -112,6 +112,5 @@ To tackle this challenge, we made use of data annotations and custom validation 
    - **Challenge**: Redirecting from one view to another while preserving data, such as form input or success messages, can be challenging.
    - **Solution**: We efficiently passed data between views and actions by using the `include` method to load related data when querying the database. This approach reduced the need for additional requests and improved performance when displaying complex data structures in views.
 
-ess the application through a web browser.
 
 
