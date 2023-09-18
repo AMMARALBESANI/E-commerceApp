@@ -2,19 +2,6 @@
 
 Welcome to the E-Commerce Application README! This document provides an overview of the E-Commerce Application, how to use it, and highlights the challenges we faced while applying validation and passing data between views.
 
-## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Controllers](#controllers)
-    - [CategoryController](#categorycontroller)
-    - [DepartmentController](#departmentcontroller)
-    - [ProductController](#productcontroller)
-3. [User Stories](#user-stories)
-4. [Challenges in Validation and Data Passing](#challenges)
-5. [Getting Started](#getting-started)
-6. [Usage](#usage)
-7. [Contributing](#contributing)
-8. [License](#license)
 
 ## 1. Introduction
 
