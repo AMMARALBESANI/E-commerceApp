@@ -17,6 +17,8 @@ namespace E_Commerce_App
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddRazorPages();
+
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             // Add Database Connection
@@ -108,7 +110,7 @@ namespace E_Commerce_App
             app.UseRouting();
             app.UseAuthorization();
             app.UseCookiePolicy();
-
+            app.MapRazorPages();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -45,6 +45,13 @@
                             <partial name="_userInfoProfile"></partial>
 
                         </li>
+                        <li class="py-2 d-flex">
+                            <a @await Component.InvokeAsync("CartViewComponent")>
+                                cart
+                            </a>
+                            
+
+                        </li>
                     </ul>
                     <div class="py-2 py-sm-2 d-none d-md-flex">
                     <partial name="_userInfoProfile"></partial>
