@@ -52,6 +52,8 @@ else
                                 </a>
 
                             </div>
+
+            
                         </div>
 
                         <div class="product-info">
@@ -63,7 +65,11 @@ else
                                     <span><i class="fas fa-star"></i></span>
                                     <span><i class="far fa-star"></i></span>
                                     <span><i class="far fa-star"></i></span>
+
                                 </div>
+                                <a @await Component.InvokeAsync("AddProductToCart",new {ProductId=item.ID}) type="button" class="btn-cart d-flex justify-content-evenly align-items-center">
+                                    <span>Add To Cart</span>
+                                </a>
                             </div>
                             <a href="#" class="product-name">@item.Name</a>
                             @if (item.Price >= 30 && item.Discount != null)
