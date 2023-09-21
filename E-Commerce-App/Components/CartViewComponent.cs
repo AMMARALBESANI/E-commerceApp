@@ -23,9 +23,11 @@ namespace E_Commerce_App.Components
                 List<Product> Product = new List<Product>();
                 foreach (var item in ProductIds)
                 {
-                    await _product.GetProductAsync(item);
+                   var x = await _product.GetProductAsync(item);
+                    Product.Add(x);
                     
                 }
+                return View(Product);
                
             }
             else

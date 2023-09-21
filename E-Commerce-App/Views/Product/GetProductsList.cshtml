@@ -67,7 +67,7 @@ else
                                     <span><i class="far fa-star"></i></span>
 
                                 </div>
-                                <a @await Component.InvokeAsync("AddProductToCart",new {ProductId=item.ID}) type="button" class="btn-cart d-flex justify-content-evenly align-items-center">
+                                <a id="AddProductToCart" type="button" class="btn-cart d-flex justify-content-evenly align-items-center" asp-action="AddProductToCart" asp-route-productID="@item.ID">
                                     <span>Add To Cart</span>
                                 </a>
                             </div>
@@ -103,6 +103,15 @@ else
     
 }
 
-
+<script>
+    $("#AddProductToCart").click(function () {
+    var referrerUrl = document.referrer;
+    if (referrerUrl) {
+        window.location.href = referrerUrl;
+    } else {
+        // Handle the case when there's no referrer URL
+    }
+});
+</script>
 
 

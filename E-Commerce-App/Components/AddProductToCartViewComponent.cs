@@ -14,28 +14,28 @@ namespace E_Commerce_App.Components
         {
             _product= product;
         }
-        public async Task<IViewComponentResult> InvokeAsync(int ProductId)
+        public async Task<IViewComponentResult> InvokeAsync(int productID)
 		{
 			var CookiesData=HttpContext.Request.Cookies["CartCookie"];
 			List<int> ProductIds;
 			if (CookiesData != null) 
 			{
                 ProductIds = JsonConvert.DeserializeObject<List<int>>(CookiesData);
-
 			}
 			else
 			{
 				ProductIds = new List<int>();
 
 			}
-			ProductIds.Add(ProductId);
+			ProductIds.Add(productID);
 			var options = new CookieOptions
 			{
 				Expires = DateTime.Now.AddDays(7),
 
 			};
             HttpContext.Response.Cookies.Append("CartCookie", JsonConvert.SerializeObject(ProductIds), options);
-            return View();
+			
+			return View();
 		}
 	}
 }

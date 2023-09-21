@@ -4,6 +4,8 @@ using E_Commerce_App.Models.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
+using System.ComponentModel;
 
 namespace E_Commerce_App.Controllers
 {
@@ -122,6 +124,20 @@ namespace E_Commerce_App.Controllers
         public IActionResult Search()
         {
             return View();
+        }
+
+        public async Task<IActionResult> AddProductToCart(int productId)
+        {
+            return ViewComponent("AddProductToCart", new { productID = productId });
+        }
+
+        public async Task<IActionResult> Cart()
+        {
+            return ViewComponent("Cart");
+        }
+        public async Task<IActionResult> RemoveFromCart(int productId)
+        {
+            return ViewComponent("RemoveFromCart" ,new {productID = productId});
         }
     }
 }
