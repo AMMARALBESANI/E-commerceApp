@@ -1,7 +1,6 @@
 ﻿using E_Commerce_App.Data;
 using E_Commerce_App.Models;
 using E_Commerce_App.Models.DTO;
-using E_Commerce_App.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
