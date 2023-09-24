@@ -11,7 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace E_Commerce_App.Controllers
 {
-	public class UserController : Controller
+    public class UserController : Controller
 	{
 		private readonly IUser _user;
 
