@@ -3,78 +3,78 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-	Layout = "_Layout";
-	var totalPrice = 0.0;
+    Layout = "_Layout";
+    var totalPrice = 0.0;
 }
 <div class="products">
     <div class="container d-flex flex-column">
         <div class="product-items">
             @foreach (var item in Model)
-			{
+            {
 
-            <div class="product">
-                <div class="product-content">
-                    <div class="product-img">
-                        @if (item.ImageURL != null)
-							{
-                        <img src="@item.ImageURL" alt="@item.Name">
-							}
-							else
-							{
-                        <img src="https://lab29images.blob.core.windows.net/images/defaultImage.png" alt="@item.Name" />
-							}
+                <div class="product">
+                    <div class="product-content">
+                        <div class="product-img">
+                            @if (item.ImageURL != null)
+                            {
+                                <img src="@item.ImageURL" alt="@item.Name">
+                            }
+                            else
+                            {
+                                <img src="https://lab29images.blob.core.windows.net/images/defaultImage.png" alt="@item.Name" />
+                            }
 
-                    </div>
-                    <div class="product-btns ">
-                        <a asp-controller="Product" asp-action="RemoveFromCart" asp-route-productID="@item.ID" type="button" class="btn-cart d-flex justify-content-evenly align-items-center">
-                            <span>Remove From Cart</span>
-                            <i class="fa-solid fa-circle-info"></i>
-                        </a>
-
-                    </div>
-                </div>
-
-                <div class="product-info">
-                    <div class="product-info-top">
-                        <h2 class="sm-title">@item.Department.Name</h2>
-                        <div class="rating">
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="far fa-star"></i></span>
-                            <span><i class="far fa-star"></i></span>
+                        </div>
+                        <div class="product-btns ">
+                            <a asp-controller="Product" asp-action="RemoveFromCart" asp-route-productID="@item.ID" type="button" class="btn-cart d-flex justify-content-evenly align-items-center">
+                                <span>Remove From Cart</span>
+                                <i class="fa-solid fa-circle-info"></i>
+                            </a>
+                            <form asp-page="/EmailSenderModel" method="post" asp-model="@item">
+                                <button type="submit" class="btn btn-primary">Send Email</button>
+                            </form>
                         </div>
                     </div>
-                    <a href="#" class="product-name">@item.Name</a>
-                    @if (item.Price >= 30 && item.Discount != null)
-						{
-							totalPrice = item.Price - Convert.ToInt32(item.Price * item.Discount / 100);
-                    <p class="product-price">$@item.Price</p>
-                    <p class="product-price">$@totalPrice</p>
-						}
-						else
-						{
-							totalPrice = item.Price;
-                    <p class="product-price1">$@totalPrice</p>
-						}
 
+                    <div class="product-info">
+                        <div class="product-info-top">
+                            <h2 class="sm-title">@item.Department.Name</h2>
+                            <div class="rating">
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="fas fa-star"></i></span>
+                                <span><i class="far fa-star"></i></span>
+                                <span><i class="far fa-star"></i></span>
+                            </div>
+                        </div>
+                        <a href="#" class="product-name">@item.Name</a>
+                        @if (item.Price >= 30 && item.Discount != null)
+                        {
+                            totalPrice = item.Price - Convert.ToInt32(item.Price * item.Discount / 100);
+                            <p class="product-price">$@item.Price</p>
+                            <p class="product-price">$@totalPrice</p>
+                        }
+                        else
+                        {
+                            totalPrice = item.Price;
+                            <p class="product-price1">$@totalPrice</p>
+                        }
+
+                    </div>
+
+                    @if (item.Discount != null && item.Discount > 0)
+                    {
+
+                        <div class="off-info">
+                            <h2 class="sm-title">@item.Discount% off</h2>
+                        </div>
+                    }
                 </div>
-
-                @if (item.Discount != null && item.Discount > 0)
-					{
-
-                <div class="off-info">
-                    <h2 class="sm-title">@item.Discount% off</h2>
-                </div>
-					}
-            </div>
-			}
+            }
 
 
         </div>
-        <form method="post">
-            <button type="submit" asp-page-handler="OnPost" class="btn btn-primary">Send Email</button>
-        </form>
-       
+
+
     </div>
 </div>
