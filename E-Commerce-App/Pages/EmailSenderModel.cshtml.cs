@@ -29,7 +29,7 @@ namespace E_Commerce_App.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            var apiKey = _configuration["SendGrid:EmailKey"]; // Retrieve SendGrid API key from appsettings.json
+            var apiKey = _configuration["SendGrid:Key"]; // Retrieve SendGrid API key from appsettings.json
             var user = await _userManager.GetUserAsync(User); // Get the currently authenticated user
 
             if (user != null)
@@ -50,19 +50,22 @@ namespace E_Commerce_App.Pages
                     if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
                     {
                         // Email sent successfully
-                        return RedirectToPage("EmailSenderModel");
+                        TempData["SuccessMessage"] = "Email sent successfully!";
+
+                        return Page();
                     }
                     else
                     {
                         // Handle the error
-                        // You can add logging or show an error message
+                        TempData["ErrorMessage"] = "An error occurred while sending the email.";
                         return Page();
                     }
                 }
                 catch (Exception ex)
                 {
                     // Handle exceptions, e.g., SendGrid API errors
-                    // You can add logging or show an error message
+                    TempData["ErrorMessage"] = "Failed to send the email.";
+
                     return Page();
                 }
             }
