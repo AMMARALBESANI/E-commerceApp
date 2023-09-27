@@ -27,7 +27,7 @@ namespace E_Commerce_App.Pages
         {
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(Product product)
         {
             var apiKey = _configuration["SendGrid:Key"]; // Retrieve SendGrid API key from appsettings.json
             var user = await _userManager.GetUserAsync(User); // Get the currently authenticated user
@@ -37,8 +37,8 @@ namespace E_Commerce_App.Pages
                 var from = new EmailAddress("abboodooa@gmail.com", "Your Name");
                 var to = new EmailAddress(user.Email, user.UserName); // Use the user's email address as the recipient
                 var subject = "Hello from SendGrid";
-                var plainTextContent = "Hello, this is a test email from SendGrid.";
-                var htmlContent = "<strong>Hello, this is a test email from SendGrid.</strong>";
+                var plainTextContent = "You just bought a "+ product.Name;
+                var htmlContent = "<strong>Hello,You just bought a" + product.Name+ "</strong>";
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
                 var client = new SendGridClient(apiKey);
