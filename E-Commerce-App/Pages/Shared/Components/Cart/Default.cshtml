@@ -30,8 +30,10 @@
                                 <span>Remove From Cart</span>
                                 <i class="fa-solid fa-circle-info"></i>
                             </a>
-                            <form asp-page="/EmailSenderModel" method="post" asp-model="@item">
-                                <button type="submit" class="btn btn-primary">Send Email</button>
+                            <form asp-page="/EmailSenderModel" method="post">
+                                @* To send some properties to the razor page  *@
+                                <input hidden name="product.name" value="@item.Name" />
+                                    <button type="submit" class="btn btn-primary">Send Email</button>
                             </form>
                         </div>
                     </div>
