@@ -64,16 +64,14 @@ namespace E_Commerce_App.Models.Services
 		[AllowAnonymous]
         public async Task<List<Product>> GetAllProducts()
         {
-			return await _commerceDBContext.Product.Include(x=> x.Department).ToListAsync();
+			var products = await _commerceDBContext.Product.Include(x=> x.Department).ToListAsync();
+			return products;
         }
 
         public async Task<Product> GetProductAsync(int ID)
 		{
 			var product = await _commerceDBContext.Product.Include(dep => dep.Department)
 				.FirstOrDefaultAsync(pro => pro.ID == ID);
-			
-
-
 			return product;
 		}
 

@@ -38,8 +38,9 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Product" asp-action="Search">Search For Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Product" asp-action="GetProductsList">Products</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/ShopList">Products</a>
                         </li>
+                        
                         <li class="py-2 d-flex d-md-none">
 
                             <partial name="_userInfoProfile"></partial>
@@ -49,8 +50,9 @@
                             <a asp-action="Cart" class="text-light nav-link" asp-controller="Product">
                                 cart
                             </a>
-                            
-
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Payment" asp-action="Index">Payment</a>
                         </li>
                     </ul>
                     <div class="py-2 py-sm-2 d-none d-md-flex">

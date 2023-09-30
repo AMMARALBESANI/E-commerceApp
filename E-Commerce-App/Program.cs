@@ -50,6 +50,7 @@ namespace E_Commerce_App
             builder.Services.AddTransient<IProduct, ProductServices>();
             builder.Services.AddTransient<IAddImage, AddImageService>();
             builder.Services.AddTransient<IUser, IdentityUserService>();
+            builder.Services.AddTransient<ICart, CartService>();
 
             //builder.Services.AddScoped<JWTTokenService>();
             //builder.Services.AddAuthentication(options =>

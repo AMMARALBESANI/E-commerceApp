@@ -14,7 +14,8 @@ namespace E_Commerce_App.Components
 
         public async Task<IViewComponentResult> InvokeAsync(int productID)
         {
-            var CookiesData = HttpContext.Request.Cookies["CartCookie"];
+            var Username = User.Identity.Name;
+            var CookiesData = HttpContext.Request.Cookies["CartCookie_"+ Username.ToString()];
             List<int> ProductIds;
             if (CookiesData != null)
             {
@@ -27,7 +28,7 @@ namespace E_Commerce_App.Components
                         Expires = DateTime.Now.AddDays(7),
 
                     };
-                    HttpContext.Response.Cookies.Append("CartCookie", JsonConvert.SerializeObject(ProductIds), options);
+                    HttpContext.Response.Cookies.Append("CartCookie_" + Username.ToString(), JsonConvert.SerializeObject(ProductIds), options);
                 }
             }
 
