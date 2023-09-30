@@ -13,25 +13,19 @@
             <a href="/User/Register" class=" text-decoration-none m-0 text-info"> <p>please signin</p></a>
             <p class="mx-2">or</p>
             <a href="/User/login" class=" text-decoration-none m-0 text-info"> <p>Already Have An Account</p></a>
-
         </div>
-       
     </div>
-    
 }
 else
 {
     <div class="products">
         <div class="container">
-
             <h1 class="lg-title text-white">Special Products With Offers</h1>
             <p class="text-center col-8 mx-auto my-1 text-dark text-white">A new Products of All categories now is available and on sales what are you waiting ? come on and choose your Product plant and buy it </p>
             <div class="product-items">
-
                 @foreach (var item in Model)
                 {
                     var totalPrice = 0.0;
-
                     <div class="product">
                         <div class="product-content">
                             <div class="product-img">
@@ -43,19 +37,14 @@ else
                                 {
                                     <img src="https://lab29images.blob.core.windows.net/images/defaultImage.png" alt="@item.Name" />
                                 }
-
                             </div>
                             <div class="product-btns">
                                 <a asp-action="ProductDetails" asp-route-id="@item.ID" type="button" class="btn-cart d-flex justify-content-evenly align-items-center">
                                     <span>Details</span>
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
-
                             </div>
-
-            
                         </div>
-
                         <div class="product-info">
                             <div class="product-info-top">
                                 <h2 class="sm-title">@item.Department.Name</h2>
@@ -65,11 +54,12 @@ else
                                     <span><i class="fas fa-star"></i></span>
                                     <span><i class="far fa-star"></i></span>
                                     <span><i class="far fa-star"></i></span>
-
                                 </div>
+                               
                                 <a id="AddProductToCart" type="button" class="btn-cart d-flex justify-content-evenly align-items-center" asp-action="AddProductToCart" asp-route-productID="@item.ID">
                                     <span>Add To Cart</span>
                                 </a>
+                               
                             </div>
                             <a href="#" class="product-name">@item.Name</a>
                             @if (item.Price >= 30 && item.Discount != null)
@@ -83,19 +73,15 @@ else
                                 totalPrice = item.Price;
                                 <p class="product-price1">$@totalPrice</p>
                             }
-
                         </div>
-
                         @if (item.Discount != null && item.Discount > 0)
                         {
-
                             <div class="off-info">
                                 <h2 class="sm-title">@item.Discount% off</h2>
                             </div>
                         }
                     </div>
                 }
-
             </div>
         </div>
     </div>

@@ -50,6 +50,7 @@
                                     <span><i class="far fa-star"></i></span>
                                     <span><i class="far fa-star"></i></span>
                                 </div>
+                                
                             </div>
                             <a href="#" class="product-name">@item.ProductName</a>
                             @if (item.ProductPrice >= 30 && item.ProductDiscount != null)
@@ -63,8 +64,9 @@
                                 totalPrice = item.ProductPrice;
                                 <p class="product-price1">$@totalPrice</p>
                             }
-
+                            
                         </div>
+
 
                         @if (item.ProductDiscount != null && item.ProductDiscount > 0)
                         {
