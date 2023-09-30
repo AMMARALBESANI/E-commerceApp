@@ -74,6 +74,22 @@ else
                                         <span>Add To Cart</span>
                                     </button>
                                 </form>
+                                <form method="post">
+                                    <select asp-for="@item.Quantity">
+
+                                        <option selected>@item.Quantity</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                    </select>
+                                </form>
                             </div>
                             <a href="#" class="product-name">@item.Name</a>
                             @if (item.Price >= 30 && item.Discount != null)
