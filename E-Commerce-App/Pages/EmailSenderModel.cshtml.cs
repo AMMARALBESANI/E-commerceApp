@@ -52,7 +52,7 @@ namespace E_Commerce_App.Pages
                         // Email sent successfully
                         TempData["SuccessMessage"] = "Email sent successfully!";
 
-                        return Page();
+                        return ViewComponent("Cart");
                     }
                     else
                     {
