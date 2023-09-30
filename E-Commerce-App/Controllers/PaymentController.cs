@@ -2,6 +2,7 @@
 using Stripe.Checkout;
 using Stripe;
 using E_Commerce_App.Models;
+using E_Commerce_App.Models.Interfaces;
 
 namespace E_Commerce_App.Controllers
 {
@@ -10,32 +11,49 @@ namespace E_Commerce_App.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public PaymentController(IConfiguration configuration)
+        private readonly ICart _cart;
+
+        public PaymentController(IConfiguration configuration, ICart cart)
         {
             _configuration = configuration;
+            _cart = cart;
 
         }
 
-        private readonly List<ShoppingCartItem> _items = new List<ShoppingCartItem>()
-        {
-            new ShoppingCartItem { ProductId = 1, ProductName = "Product A", ProductPrice = 10.99, ProductDiscount = 4},
-            new ShoppingCartItem { ProductId = 2, ProductName = "Product B", ProductPrice = 19.99, ProductDiscount = 2}
-        };
+        private readonly List<ShoppingCartItem> _items = new List<ShoppingCartItem>();
+
+
 
         public IActionResult Index()
         {
-
-            CartViewModel cartViewModel = new CartViewModel()
+            if (User.Identity.Name == null)
             {
-                CartItems = _items
-            };
-
-            foreach (var item in cartViewModel.CartItems)
-            {
-                cartViewModel.OrderTotal += (item.ProductPrice * item.Quantity);
+                return View();
             }
+            else
+            {
+                var _items = _cart.GetCartItems(User.Identity.Name);
 
-            return View(cartViewModel);
+               if (_items.Count == 0)
+                {
+                    return View();
+                }
+                else
+                {
+                    CartViewModel cartViewModel = new CartViewModel()
+                    {
+                        CartItems = _items
+                    };
+
+                    foreach (var item in cartViewModel.CartItems)
+                    {
+                        cartViewModel.OrderTotal += (item.ProductPrice * item.Quantity);
+                    }
+
+                    return View(cartViewModel);
+                }
+            }
+            
         }
 
         public IActionResult Summary()
@@ -94,7 +112,7 @@ namespace E_Commerce_App.Controllers
 
             StripeConfiguration.ApiKey = _configuration.GetSection("StripeAPI:SecretKey").Get<string>();
 
-            var domain = "https://localhost:7253/";
+            var domain = "https://localhost:7123/";
 
             var options = new SessionCreateOptions
             {

@@ -20,7 +20,6 @@ namespace E_Commerce_App.Pages
         {
             _product = product;
             _cart = cart;
-            
         }
         
         
@@ -46,6 +45,7 @@ namespace E_Commerce_App.Pages
                 ProductPrice = product.Price,
                 ProductDiscount = product.Discount,
                 ProductUrl = product.ImageURL,
+                Quantity = product.Quantity,
                 DepartmentName = product.Department.Name
             };
 
