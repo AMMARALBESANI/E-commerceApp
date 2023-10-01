@@ -176,7 +176,7 @@ E-Commerce Sprint 2 - Milestone 4: Payment Processing
 User Stories and Tasks
 
 As a user, I would like to see a summary of my purchase after completing my checkout process with a successful transaction.
-To achieve this, we will create a "checkout" page that appears after the user selects "Checkout" on their cart/basket page. We will integrate payment processing with Authorize.net using the repository design pattern and have it injected into our razor page. During order completion, we will capture the following user information:
+To achieve this, we will create a "checkout" page that appears after the user selects "Checkout" on their cart/basket page. During order completion, we will capture the following user information:
 
 First Name
 Last Name
@@ -201,7 +201,6 @@ To address these user stories and tasks, we will follow the guidance provided fo
 
 User Story 1: Checkout Page and Payment Integration
 Create a "checkout" page for order processing.
-Integrate payment processing using Authorize.net (sandbox account for testing).
 Implement the repository design pattern for payment processing.
 Capture user information during order completion.
 User Story 2: Receipt Page and Email Confirmation
