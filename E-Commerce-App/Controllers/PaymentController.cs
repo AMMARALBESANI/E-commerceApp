@@ -20,10 +20,6 @@ namespace E_Commerce_App.Controllers
 
         }
 
-        private readonly List<ShoppingCartItem> _items = new List<ShoppingCartItem>();
-
-
-
         public IActionResult Index()
         {
             if (User.Identity.Name == null)
@@ -58,6 +54,8 @@ namespace E_Commerce_App.Controllers
 
         public IActionResult Summary()
         {
+            var _items = _cart.GetCartItems(User.Identity.Name);
+
             CartViewModel cartViewModel = new CartViewModel()
             {
                 CartItems = _items,
@@ -87,6 +85,7 @@ namespace E_Commerce_App.Controllers
         [ActionName("Summary")]
         public IActionResult SummaryPOST()
         {
+            var _items = _cart.GetCartItems(User.Identity.Name);
             CartViewModel cartViewModel = new CartViewModel()
             {
                 CartItems = _items,
