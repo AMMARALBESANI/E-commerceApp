@@ -15,5 +15,6 @@
         double GetTotalPrice(string userName);
 
         int GetTotalItemCount(string userName);
+
     }
 }

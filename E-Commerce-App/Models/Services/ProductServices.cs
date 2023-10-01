@@ -38,7 +38,17 @@ namespace E_Commerce_App.Models.Services
 			}
 		}
 
-		public async Task<List<Product>> GetAllProductAsync(int departmentID)
+        public async Task EditAmount(int Productid, int Quantity)
+        {
+			var product = await _commerceDBContext.Product.FindAsync(Productid);
+			product.Amount -= Quantity;
+
+           _commerceDBContext.Entry(product).State= EntityState.Modified;
+			await _commerceDBContext.SaveChangesAsync();
+
+        }
+
+        public async Task<List<Product>> GetAllProductAsync(int departmentID)
 		{
 
 			return await _commerceDBContext.Product.Include(dp => dp.Department).Where(x=>x.DepartmentID== departmentID)

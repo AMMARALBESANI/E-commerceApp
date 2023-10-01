@@ -1,4 +1,5 @@
 ﻿using E_Commerce_App.Models.Interfaces;
+using Stripe;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_Commerce_App.Models
@@ -12,6 +13,8 @@ namespace E_Commerce_App.Models
         public int Price { get; set; }
 
         public int Quantity { get; set; }
+
+        public int Amount { get; set; }
 
         public int DepartmentID { get; set; }
 

@@ -3,6 +3,7 @@ using E_Commerce_App.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NUnit.Framework;
 
 namespace E_Commerce_App.Pages
 {
@@ -14,8 +15,10 @@ namespace E_Commerce_App.Pages
 
         private readonly ICart _cart;
 
-        public List<Product> Products { get; set; }
 
+        public List<Product> Products { get; set; }
+        [BindProperty]
+        public int quantityNumber { get; set; }
         public ShopListModel(IProduct product, ICart cart)
         {
             _product = product;
@@ -31,6 +34,8 @@ namespace E_Commerce_App.Pages
         {
             var product = await _product.GetProductAsync(productID);
 
+           await _product.EditAmount(productID, quantityNumber);
+
             var Username = User.Identity.Name;
 
             if (Username == null)
@@ -45,7 +50,7 @@ namespace E_Commerce_App.Pages
                 ProductPrice = product.Price,
                 ProductDiscount = product.Discount,
                 ProductUrl = product.ImageURL,
-                Quantity = product.Quantity,
+                Quantity = quantityNumber,
                 DepartmentName = product.Department.Name
             };
 

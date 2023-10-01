@@ -18,5 +18,7 @@ namespace E_Commerce_App.Models.Interfaces
         public Task<Product> GetProductAsync(int ID);
 
         public Task<List<Product>> GetProductByName(string name);
+
+        public Task EditAmount(int Productid, int Quantity);
     }
 }
