@@ -196,17 +196,4 @@ If the payment fails for any reason, we will implement error handling to provide
 As an administrator, I would like to see a listing of all paid/processed orders.
 We will create an admin dashboard that allows administrators to view a list of all successfully paid and processed orders. This will help the admin team track and manage orders effectively.
 
-Guidance
-To address these user stories and tasks, we will follow the guidance provided for each:
 
-User Story 1: Checkout Page and Payment Integration
-Create a "checkout" page for order processing.
-Implement the repository design pattern for payment processing.
-Capture user information during order completion.
-User Story 2: Receipt Page and Email Confirmation
-Redirect the user to a "receipt" page after order completion.
-Display a summary of the purchased items, order number, and shipping/billing information on the receipt page.
-Send an email confirmation to the user with the same information.
-Encourage the use of SendGrid design templates for email content.
-User Story 3: Thank-You Message
-Display a thank-you message to the user after the order is successfully processed.
