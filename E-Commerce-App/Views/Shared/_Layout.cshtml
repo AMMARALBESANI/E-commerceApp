@@ -18,7 +18,7 @@
 </head>
 <body class="m-0">
     <header class="bg-dark m-0 text-light border-0 container-fluid">
-        <nav class="navbar navbar-expand-md navbar-light bg-primary-subtle box-shadow">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">E_Commerce_App</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -45,11 +45,6 @@
 
                             <partial name="_userInfoProfile"></partial>
 
-                        </li>
-                        <li class="nav-item">
-                            <a asp-action="Cart" class="text-light nav-link" asp-controller="Product">
-                                cart
-                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Payment" asp-action="Index">Payment</a>
@@ -80,6 +75,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://kit.fontawesome.com/f9b49e7bf3.js" crossorigin="anonymous"></script>
     <script src="~/js/ajax.js"></script>
+    <script src="~/js/Input.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.13/jquery.validate.unobtrusive.min.js"></script>
 
 

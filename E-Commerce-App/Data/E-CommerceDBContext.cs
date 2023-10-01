@@ -81,7 +81,9 @@ namespace E_Commerce_App.Data
                     Name = "Samsung",
                     Price = 350,
                     Quantity = 23,
+                    Amount = 25,
                     DepartmentID = 1
+                   
                 },
                 new Product
                 {
@@ -89,6 +91,7 @@ namespace E_Commerce_App.Data
                     Name = "LG",
                     Price = 300,
                     Quantity = 40,
+                    Amount = 25,
                     DepartmentID = 1
                 },
                 new Product
@@ -97,6 +100,7 @@ namespace E_Commerce_App.Data
                     Name = "Beko",
                     Price = 250,
                     Quantity = 50,
+                    Amount = 25,
                     DepartmentID = 2
                 },
                 new Product
@@ -105,6 +109,7 @@ namespace E_Commerce_App.Data
                     Name = "Toshiba",
                     Price = 280,
                     Quantity = 40,
+                    Amount = 25,
                     DepartmentID = 2
                 },
                 new Product
@@ -113,6 +118,7 @@ namespace E_Commerce_App.Data
                     Name = "4 Person lunch Table",
                     Price = 40,
                     Quantity = 100,
+                    Amount = 25,
                     DepartmentID = 3
                 },
                 new Product
@@ -129,6 +135,7 @@ namespace E_Commerce_App.Data
                     Name = "Teval Pan",
                     Price = 20,
                     Quantity = 45,
+                    Amount = 25,
                     DepartmentID = 4
                 },
                 new Product
@@ -137,6 +144,7 @@ namespace E_Commerce_App.Data
                     Name = "Dishes",
                     Price = 15,
                     Quantity = 100,
+                    Amount = 25,
                     DepartmentID = 4
                 },
                 new Product
@@ -145,6 +153,7 @@ namespace E_Commerce_App.Data
                     Name = "Sheep meat",
                     Price = 15,
                     Quantity = 110,
+                    Amount = 25,
                     DepartmentID = 5
                 },
                 new Product
@@ -153,6 +162,7 @@ namespace E_Commerce_App.Data
                     Name = "Beef",
                     Price = 10,
                     Quantity = 80,
+                    Amount = 25,
                     DepartmentID = 5
                 },
                 new Product
@@ -161,6 +171,7 @@ namespace E_Commerce_App.Data
                     Name = "Sunny frying oil",
                     Price = 10,
                     Quantity = 80,
+                    Amount = 25,
                     DepartmentID = 6
                 },
                 new Product
@@ -169,6 +180,7 @@ namespace E_Commerce_App.Data
                     Name = "Durra Bean Box 500g",
                     Price = 1,
                     Quantity = 48,
+                    Amount = 25,
                     DepartmentID = 6
 
                 });
