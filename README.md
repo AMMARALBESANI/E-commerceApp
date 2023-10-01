@@ -112,12 +112,6 @@ To tackle this challenge, we made use of data annotations and custom validation 
 
 # E-Commerce Sprint 2 - Milestone 1: Storefront
 
-Work together with your partner(s) to complete this lab.
-
-NOTE: Your team workflow will live in Azure Dev Ops. Use this tool to store your project repository code, user stories, and general overall workflow.Azure DevOps CheatSheet
-
-Your team will be evaluated and graded at the end of every sprint for the individual milestones and overall presentation of the sprint/project. Each day the previous day’s milestones build off each other as the project progresses. Stay on top of your work, Communicate, and work together.
-
 Consumer Site (The Storefront)
 We’ll now switch our attention to the consumer side of our online storefront, building out a system whereby our potential customers can register for an account
 
@@ -144,12 +138,6 @@ As a user, I would like to search for products by entering keywords or product n
 
 # E-Commerce Sprint 2 - Milestone 2: Shopping Cart
 
-Work together with your partner(s) to complete this lab.
-
-NOTE: Your team workflow will live in Azure Dev Ops. Use this tool to store your project repository code, user stories, and general overall workflow.Azure DevOps CheatSheet
-
-Your team will be evaluated and graded at the end of every sprint for the individual milestones and overall presentation of the sprint/project. Each day the previous day’s milestones build off each other as the project progresses. Stay on top of your work, Communicate, and work together.
-
 Consumer Site (The Storefront)
 Now that we have valid users, and the ability to browse the inventory, it’s time to allow our registered customers the ability to add items to their “Shopping Cart”
 
@@ -167,15 +155,6 @@ As a user I would like a dedicated page where I can view all the products I wish
 
 # E-Commerce Sprint 2 - Milestone 3: Notifications
 
-Work together with your partner(s) to complete this lab.
-
-NOTE: Your team workflow will live in Azure Dev Ops. Use this tool to store your project repository code, user stories, and general overall workflow.Azure DevOps CheatSheet
-
-Your team will be evaluated and graded at the end of every sprint for the individual milestones and overall presentation of the sprint/project. Each day the previous day’s milestones build off each other as the project progresses. Stay on top of your work, Communicate, and work together.
-
-Consumer Site (The Storefront)
-The cart is full and our customer is ready to make a purchase. Focusing on that workflow, we’d like to give them the ability to enter their payment information and begin the order finalization process.
-
 For this milestone, our goal is simply to create the final 2 pages in the workflow (order and receipt) and execute the communications process … not to accept payment and process the order.
 
 User Stories and Tasks
@@ -192,42 +171,12 @@ As an administrator, I would like a copy of all purchases emailed to our sales d
 As an administrator, I would like a copy of all purchases emailed to our warehouse so that they can begin the fulfillment process.
 
 
-# E-Commerce Sprint 2 - Milestone 4: Payment Processing
-
-Work together with your partner(s) to complete this lab.
-
-NOTE: Your team workflow will live in Azure Dev Ops. Use this tool to store your project repository code, user stories, and general overall workflow.Azure Dev Ops CheatSheet
-
-Your team will be evaluated and graded at the end of every sprint for the individual milestones and overall presentation of the sprint/project. Each day the previous day’s milestones build off each other as the project progresses. Stay on top of your work, Communicate, and work together.
-
-Consumer Site (The Storefront)
-In this last phase of the store build, we’ll be adding the ability to process the order using an actual credit card transaction processor - Authorize.net.
-
-Inject a process between the user “completing” their order and the communications phase. Process the consumer’s credit card and only complete the order process (emails and receipt) if the card was valid and monies paid.
-
-Admin Dashboard
-We’ll want to see a new page with a list of all orders that were successfully paid and processed.
+E-Commerce Sprint 2 - Milestone 4: Payment Processing
 
 User Stories and Tasks
-Divide your work evenly amongst your team members.
 
 As a user, I would like to see a summary of my purchase after completing my checkout process with a successful transaction.
-
-As a user, following a successful transaction, I would like a summary of my purchase to be emailed to me so that I can store the receipt for my records.
-
-As a user, I would like to be thanked for my purchase following completion of order processing.
-
-As a user, I would like to be notified if my payment failed so that I can try again.
-
-As an administrator, I would like to see a listing of all paid/processed orders.
-
-Guidance
-
-User Story 1: This user story will require that you create a “checkout” page. This checkout page should appear after the user selects “Checkout” on their cart/basket page.
-
-Using Authorize.Net, integrate payment into your application. Use the sandbox account to prevent usage of real credit card charges. Integrate the payment using the repository design pattern, and have it injected into your razor page.
-
-When completing an order, capture the following information about the user:
+To achieve this, we will create a "checkout" page that appears after the user selects "Checkout" on their cart/basket page. We will integrate payment processing with Authorize.net using the repository design pattern and have it injected into our razor page. During order completion, we will capture the following user information:
 
 First Name
 Last Name
@@ -235,17 +184,30 @@ Billing/Shipping Address
 Billing/Shipping City
 Billing/Shipping State
 Billing/Shipping Zip
-Generally, each order has it’s own “Id”, is connected to a specific user, and each order contains a number of order items. A user could potentially have many orders.
+As a user, following a successful transaction, I would like a summary of my purchase to be emailed to me so that I can store the receipt for my records.
+After a successful transaction, we will redirect the user to a "receipt" page. This page will display a summary of the items they purchased, including the order number, shipping/billing information, and other relevant details. We will also send an email confirmation to the user with the same information. We encourage the use of SendGrid design templates for the email, although it's not mandatory. We will also consider using StringBuilder for efficient email content generation.
 
-Keeping this in mind, expand your database to accept orders for the checkout process. In the next couple labs, we will be showcasing a specific user’s order to them within their profile page.
+As a user, I would like to be thanked for my purchase following the completion of order processing.
+Upon successful order processing, we will display a thank-you message to the user to express our appreciation for their purchase.
 
-User Story 2: After the checkout process is complete, redirect the user to a “receipt” page that shows a summary of the items that they purchased, as well as the order number, shipping/billing information, and anything else that may be relevant.
+As a user, I would like to be notified if my payment failed so that I can try again.
+If the payment fails for any reason, we will implement error handling to provide clear notifications to the user. This will guide them on how to proceed and attempt payment again.
 
-User Story 3: When the user has completed the checkout process, email them a confirmation of their order.
+As an administrator, I would like to see a listing of all paid/processed orders.
+We will create an admin dashboard that allows administrators to view a list of all successfully paid and processed orders. This will help the admin team track and manage orders effectively.
 
-Hint: When creating the email, consider using the SendGrid design templates. Not required, but encouraged.
+Guidance
+To address these user stories and tasks, we will follow the guidance provided for each:
 
-Also consider using StringBuilder when creating the text for the email, this is much more efficient than concatenating a string together.
-
-
-
+User Story 1: Checkout Page and Payment Integration
+Create a "checkout" page for order processing.
+Integrate payment processing using Authorize.net (sandbox account for testing).
+Implement the repository design pattern for payment processing.
+Capture user information during order completion.
+User Story 2: Receipt Page and Email Confirmation
+Redirect the user to a "receipt" page after order completion.
+Display a summary of the purchased items, order number, and shipping/billing information on the receipt page.
+Send an email confirmation to the user with the same information.
+Encourage the use of SendGrid design templates for email content.
+User Story 3: Thank-You Message
+Display a thank-you message to the user after the order is successfully processed.
