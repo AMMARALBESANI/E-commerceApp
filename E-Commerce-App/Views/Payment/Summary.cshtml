@@ -25,6 +25,12 @@
 									<span class="text-info">Shipping Details:</span>
 								</h4>
 							</div>
+							<div class="d-none">
+								<input asp-for="OrderInformation.ID" hidden />
+							</div>
+							<div class="d-none">
+								<input asp-for="OrderInformation.Username" hidden" value="@User.Identity.Name"/>
+							</div>
 							<div class="row my-1">
 								<div class="col-3">
 									<label>Name</label>
@@ -99,6 +105,7 @@
 								<li class="list-group-item d-flex justify-content-between bg-light">
 									<small class="text-info">Total (USD)</small>
 									<strong class="text-info">@Model.OrderTotal.ToString("c")</strong>
+									<input asp-for="OrderTotal" hidden />
 								</li>
 							</ul>
 						</div>

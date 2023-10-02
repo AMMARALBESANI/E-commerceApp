@@ -4,6 +4,7 @@ using E_Commerce_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce_App.Migrations
 {
     [DbContext(typeof(E_CommerceDBContext))]
-    partial class E_CommerceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231001201730_updateorder")]
+    partial class updateorder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,19 +178,9 @@ namespace E_Commerce_App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SessionID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("StreetAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -341,7 +334,7 @@ namespace E_Commerce_App.Migrations
                     b.Property<string>("DepartmentName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderID")
+                    b.Property<int?>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<double?>("ProductDiscount")
@@ -364,9 +357,8 @@ namespace E_Commerce_App.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -444,16 +436,16 @@ namespace E_Commerce_App.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3dd6824e-029e-4cd6-8da8-a8776c901f3e",
+                            ConcurrencyStamp = "f98b7e36-cfe5-4b58-99da-ad1197a176ba",
                             Email = "adminUser@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "adminUser@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA8gyKxS2E5JxHsqgcL/Kzl3KwusCiqlacTdm9f5Vd5Viz1MD47lByGKMghihN3/sQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFfts4DsVvxxeGJoEVEDuIFlnnZN6wy/oSxT7HO8z7HMGr8zgMCu7MqG4VzgROWWIg==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3b5ac089-a365-4d40-b2a8-9c67b8b4fff0",
+                            SecurityStamp = "f42f8157-2ded-493b-a8b5-9cf4151ed0e0",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -713,9 +705,7 @@ namespace E_Commerce_App.Migrations
                 {
                     b.HasOne("E_Commerce_App.Models.Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

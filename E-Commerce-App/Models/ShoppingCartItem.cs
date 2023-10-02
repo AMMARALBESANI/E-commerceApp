@@ -1,10 +1,12 @@
-﻿namespace E_Commerce_App.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace E_Commerce_App.Models
 {
     public class ShoppingCartItem
     {
         public int ID { get; set; }
 
-        public int UserId { get; set; }
+        public string username { get; set; }
 
         public int ProductId { get; set; }
 
@@ -20,6 +22,11 @@
         public string? DepartmentName { get; set; } // we should change it 
 
         public double? ProductDiscount { get; set; }
+
+        [ForeignKey("OrderID")]
+        public int OrderID { get; set; }
+
+        //public Order Order { get; set; }
 
 
     }

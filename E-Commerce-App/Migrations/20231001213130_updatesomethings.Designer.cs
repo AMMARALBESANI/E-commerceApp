@@ -4,6 +4,7 @@ using E_Commerce_App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce_App.Migrations
 {
     [DbContext(typeof(E_CommerceDBContext))]
-    partial class E_CommerceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231001213130_updatesomethings")]
+    partial class updatesomethings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,19 +178,9 @@ namespace E_Commerce_App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SessionID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("StreetAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -341,7 +334,7 @@ namespace E_Commerce_App.Migrations
                     b.Property<string>("DepartmentName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderID")
+                    b.Property<int?>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<double?>("ProductDiscount")
@@ -444,16 +437,16 @@ namespace E_Commerce_App.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3dd6824e-029e-4cd6-8da8-a8776c901f3e",
+                            ConcurrencyStamp = "4f039b93-f93e-46fb-bce6-95407e3446ca",
                             Email = "adminUser@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "adminUser@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA8gyKxS2E5JxHsqgcL/Kzl3KwusCiqlacTdm9f5Vd5Viz1MD47lByGKMghihN3/sQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHEgOTSvaQH6CeP/2AIcK62TOdC63a4cULzHvtEga0YCIpDea+u1UROPp9Al/bpAXA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3b5ac089-a365-4d40-b2a8-9c67b8b4fff0",
+                            SecurityStamp = "3ebf249c-53b2-40c0-8f97-4bbebb951860",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -713,9 +706,7 @@ namespace E_Commerce_App.Migrations
                 {
                     b.HasOne("E_Commerce_App.Models.Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

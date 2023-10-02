@@ -3,6 +3,13 @@ using Stripe.Checkout;
 using Stripe;
 using E_Commerce_App.Models;
 using E_Commerce_App.Models.Interfaces;
+using Newtonsoft.Json;
+using System.Text;
+using SendGrid.Helpers.Mail;
+using SendGrid;
+using System.Security.Claims;
+using EllipticCurve.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_Commerce_App.Controllers
 {
@@ -13,13 +20,15 @@ namespace E_Commerce_App.Controllers
 
         private readonly ICart _cart;
 
-        public PaymentController(IConfiguration configuration, ICart cart)
+        private readonly IOrder _order;
+
+
+        public PaymentController(IConfiguration configuration, ICart cart, IOrder order)
         {
             _configuration = configuration;
             _cart = cart;
-
+            _order = order;
         }
-
         public IActionResult Index()
         {
             if (User.Identity.Name == null)
@@ -28,9 +37,10 @@ namespace E_Commerce_App.Controllers
             }
             else
             {
+
                 var _items = _cart.GetCartItems(User.Identity.Name);
 
-               if (_items.Count == 0)
+                if (_items.Count == 0)
                 {
                     return View();
                 }
@@ -46,10 +56,11 @@ namespace E_Commerce_App.Controllers
                         cartViewModel.OrderTotal += (item.ProductPrice * item.Quantity);
                     }
 
+
                     return View(cartViewModel);
                 }
             }
-            
+
         }
 
         public IActionResult Summary()
@@ -60,16 +71,6 @@ namespace E_Commerce_App.Controllers
             {
                 CartItems = _items,
                 OrderInformation = new Order()
-                {
-                    Name = "Abdallah",
-                    City = "Irbid",
-                    PhoneNumber = "122323343243",
-                    PostalCode = "1234",
-                    UserId = 1,
-                    StreetAddress = "Irbid 100 St"
-
-                }
-
             };
 
 
@@ -83,30 +84,38 @@ namespace E_Commerce_App.Controllers
 
         [HttpPost]
         [ActionName("Summary")]
-        public IActionResult SummaryPOST()
+        public async Task<IActionResult> SummaryPOST(CartViewModel cart)
         {
-            var _items = _cart.GetCartItems(User.Identity.Name);
+            cart.CartItems = _cart.GetCartItems(User.Identity.Name);
+
             CartViewModel cartViewModel = new CartViewModel()
             {
-                CartItems = _items,
+                CartItems = cart.CartItems,
                 OrderInformation = new Order()
                 {
-                    Name = "Abdallah",
-                    City = "Irbid",
-                    PhoneNumber = "122323343243",
-                    PostalCode = "1234",
-                    UserId = 1,
-                    StreetAddress = "Irbid 100 St"
+                    Name = cart.OrderInformation.Name,
+                    City = cart.OrderInformation.City,
+                    PhoneNumber = cart.OrderInformation.PhoneNumber,
+                    PostalCode = cart.OrderInformation.PostalCode,
+                    Username = cart.OrderInformation.Username,
+                    StreetAddress = cart.OrderInformation.StreetAddress,
+                    Items = cart.CartItems
 
                 }
             };
+
+
 
             foreach (var item in cartViewModel.CartItems)
             {
                 cartViewModel.OrderTotal += (item.ProductPrice * item.Quantity);
             }
 
+            cartViewModel.OrderInformation.TotalPrice = cartViewModel.OrderTotal;
+
             cartViewModel.OrderInformation.OrderDate = DateTime.Now;
+
+
 
 
             StripeConfiguration.ApiKey = _configuration.GetSection("StripeAPI:SecretKey").Get<string>();
@@ -115,10 +124,14 @@ namespace E_Commerce_App.Controllers
 
             var options = new SessionCreateOptions
             {
-                SuccessUrl = domain + "Payment/OrderConfirmation",
+                SuccessUrl = domain + $"Payment/OrderConfirmation/{cartViewModel.OrderInformation.ID}",
                 CancelUrl = domain + "Payment/Index",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
+                Metadata = new Dictionary<string, string>
+                {
+                    { "OrderID", cartViewModel.OrderInformation.ID.ToString() }
+                }
             };
 
             foreach (var item in cartViewModel.CartItems)
@@ -127,12 +140,15 @@ namespace E_Commerce_App.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions()
                     {
-                        UnitAmount = (long)(item.ProductPrice * 100), // 20.50 => 2050
+                        UnitAmount = (long)(item.ProductPrice * 100),
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions()
                         {
                             Name = item.ProductName
-                        }
+                        },
+
+
+
                     },
                     Quantity = item.Quantity
                 };
@@ -145,37 +161,124 @@ namespace E_Commerce_App.Controllers
 
             var sessionId = session.Id;
 
+            // adding the seesion id to the order 
+            cartViewModel.OrderInformation.SessionID = sessionId;
+
+            cartViewModel.OrderInformation.Status = "Completed";
+
+            await _order.AddOrder(cartViewModel.OrderInformation);
+
             TempData["sessionId"] = sessionId;
 
 
             Response.Headers.Add("Location", session.Url);
 
+
             return new StatusCodeResult(303);
 
         }
 
-        public IActionResult OrderConfirmation(int OrderId = 5)
+        private async Task<bool> SendConfirmationEmailAsync(ClaimsPrincipal user, Order order)
         {
-            ///var order = OrderService.GetOrderInformation(OrderId);
-            /// var sessionId = order.SessionId
+            try
+            {
+                var apiKey = _configuration["SendGrid:Key"];
+                var from = new EmailAddress("abboodooa@gmail.com", $"Sir: {User.Identity.Name}");
 
-            var sessionId = TempData["sessionId"].ToString();
+                // Retrieve the email claim from the ClaimsPrincipal
+                var emailClaim = user.FindFirst(ClaimTypes.Email); // Adjust the claim type as needed
+
+                if (emailClaim != null)
+                {
+                    var to = new EmailAddress(emailClaim.Value, user.Identity.Name);
+                    var subject = "Order Confirmation";
+
+                    // Include order details in the email content
+                    var plainTextContent = $"Your order ({order.ID}) has been confirmed.";
+                    var htmlContent = $"<strong>Your order ({order.ID}) has been confirmed.</strong><br><br>";
+
+                    // Add order details
+                    htmlContent += "<strong>Order Details:</strong><br>";
+                    foreach (var item in order.Items)
+                    {
+                        htmlContent += $"Product: {item.ProductName}, Quantity: {item.Quantity}, Price: {item.ProductPrice}<br>";
+                    }
+                    htmlContent += $"<strong>TotalPrice: {order.TotalPrice}</strong>";
+                    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+                    var client = new SendGridClient(apiKey);
+                    var response = await client.SendEmailAsync(msg);
+
+                    return response.StatusCode == System.Net.HttpStatusCode.Accepted;
+                }
+                else
+                {
+                    // Handle the case where the email claim is not found
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, e.g., SendGrid API errors
+                return false;
+            }
+        }
+
+        public async Task<IActionResult> OrderConfirmation()
+        {
+            var sessionId = TempData["sessionId"]?.ToString();
+
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return Content("Session Id not found.");
+            }
 
             var service = new SessionService();
-
             Session session = service.Get(sessionId);
 
+                    var order = await _order.GetOrderBySessionId(sessionId);
             if (session != null)
             {
                 if (session.PaymentStatus.ToLower() == "paid")
                 {
-                    return View();
+
+                    if (order != null)
+                    {
+                        // Payment was successful, and the order is marked as completed.
+                        _cart.RemoveAllCart(User.Identity.Name);
+
+                        // Send the email using the separate method with order details
+                        var emailSent = await SendConfirmationEmailAsync(User, order);
+
+                        if (emailSent)
+                        {
+                            TempData["SuccessMessage"] = "Email sent successfully!";
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "An error occurred while sending the email.";
+                        }
+
+                        return View(order);
+                    }
+
+                    order.Status = "Failed";
+
+                    await _order.UpdateOrder(sessionId, order);
+
                 }
             }
 
-            return Content("Not completed suucessfully");
-
+            return Content("Not completed successfully");
         }
+        [Authorize]
+        public async Task<IActionResult> AllSuccessOrders()
+        {
+            var order = await _order.GetAllSuccessOrders();
+
+            return View(order);
+        }
+
     }
 
 }
