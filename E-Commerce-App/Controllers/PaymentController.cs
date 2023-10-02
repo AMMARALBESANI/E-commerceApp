@@ -124,7 +124,7 @@ namespace E_Commerce_App.Controllers
             var host = HttpContext.Request.Host;
 
             // Build the dynamic domain using the protocol and host
-            var domain = $"{protocol}://{host}";
+            var domain = $"{protocol}://{host}/";
 
             var options = new SessionCreateOptions
             {
