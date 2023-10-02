@@ -120,7 +120,11 @@ namespace E_Commerce_App.Controllers
 
             StripeConfiguration.ApiKey = _configuration.GetSection("StripeAPI:SecretKey").Get<string>();
 
-            var domain = "https://localhost:7123/";
+            var protocol = HttpContext.Request.Scheme;
+            var host = HttpContext.Request.Host;
+
+            // Build the dynamic domain using the protocol and host
+            var domain = $"{protocol}://{host}";
 
             var options = new SessionCreateOptions
             {
