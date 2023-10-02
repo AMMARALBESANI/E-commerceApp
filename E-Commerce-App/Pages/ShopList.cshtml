@@ -12,7 +12,7 @@
             To see the product you must sign in 
         </p>
         <div class="d-flex text-white justify-content-center">
-            <a href="/User/Register" class=" text-decoration-none m-0 text-info"> <p>please signin</p></a>
+            <a href="/User/Register" class=" text-decoration-none m-0 text-info"> <p>please SignIn</p></a>
             <p class="mx-2">or</p>
             <a href="/User/login" class=" text-decoration-none m-0 text-info"> <p>Already Have An Account</p></a>
 
@@ -70,25 +70,10 @@ else
 
                                 </div>
                                 <form method="post" asp-page-handler="AddToProduct" asp-route-productID="@item.ID">
+                                    <input class="form-control" asp-for="quantityNumber" value="1" min="1"/>
                                     <button id="AddProductToCart" type="submit" class="btn-cart d-flex justify-content-evenly align-items-center">
                                         <span>Add To Cart</span>
                                     </button>
-                                </form>
-                                <form method="post">
-                                    <select asp-for="@item.Quantity">
-
-                                        <option selected>@item.Quantity</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                    </select>
                                 </form>
                             </div>
                             <a href="#" class="product-name">@item.Name</a>

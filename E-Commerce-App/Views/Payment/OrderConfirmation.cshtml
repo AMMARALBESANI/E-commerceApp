@@ -1,1 +1,16 @@
-﻿<h1>Your order is completed successfully</h1>
+﻿@model Order
+@if (Model != null)
+{
+    <div>@Model.ID</div>
+    <div>@Model.Name</div>
+    <div>@Model.City</div>
+    @* <div>@Model.PaymentStatus</div> *@
+    <div>@Model.PhoneNumber</div>
+    <div>@Model.OrderDate</div>
+    <div>@Model.PostalCode</div>
+    <div>@Model.SessionID</div>
+    <div>@Model.StreetAddress</div>
+}
+else{
+    <div>Order Not Completed </div>
+}

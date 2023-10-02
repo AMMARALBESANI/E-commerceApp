@@ -15,5 +15,9 @@
         double GetTotalPrice(string userName);
 
         int GetTotalItemCount(string userName);
+
+        ShoppingCartItem GetCartItemFromCookie(string username, int productId);
+
+        bool IfNotExsit(string username,int productId);   
     }
 }

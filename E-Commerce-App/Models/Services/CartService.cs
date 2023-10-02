@@ -41,6 +41,13 @@ namespace E_Commerce_App.Models.Services
 
             var existingItem = cart.FirstOrDefault(x => x.ProductId == item.ProductId);
 
+            if (existingItem != null)
+            {
+                // Update the existing item with the new values
+                existingItem.Quantity = item.Quantity;
+                existingItem.ProductPrice = item.ProductPrice;
+            }
+
             SaveCartToCookies(userName, cart);
         }
 
@@ -100,6 +107,39 @@ namespace E_Commerce_App.Models.Services
                 Expires = DateTime.UtcNow.AddMonths(1) // Adjust the expiration as needed
             };
             _httpContextAccessor.HttpContext.Response.Cookies.Append($"Cart_{userName}", Convert.ToBase64String(Encoding.UTF8.GetBytes(cartJson)), cartCookie);
+        }
+
+        public bool IfNotExsit(string username, int productId)
+        {
+            var cartCookie = _httpContextAccessor.HttpContext.Request.Cookies[$"Cart_{username}"];
+
+            var GetProduct = GetCartItems(username).FirstOrDefault(x => x.ProductId == productId);
+
+            if (GetProduct != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+        public ShoppingCartItem? GetCartItemFromCookie(string username, int productId)
+        {
+            List<ShoppingCartItem> cart = GetCartItems(username);
+
+            var shoppingCartItem = cart.FirstOrDefault(x => x.ProductId == productId);
+
+            if (shoppingCartItem != null)
+            {
+                return shoppingCartItem;
+
+            }
+            else
+                return null;
+
         }
     }
 }
