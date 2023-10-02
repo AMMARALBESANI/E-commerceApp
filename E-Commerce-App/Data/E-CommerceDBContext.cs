@@ -254,6 +254,5 @@ namespace E_Commerce_App.Data
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<ProductDTO> ProductDTO { get; set; } = default!;
     }
 }

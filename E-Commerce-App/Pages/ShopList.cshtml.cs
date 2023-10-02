@@ -22,8 +22,10 @@ namespace E_Commerce_App.Pages
             _cart = cart;
             
         }
-        
-        
+        public List<Product> Products { get; set; }
+
+        [BindProperty]
+        public int quantityNumber { get; set; }
         public async Task OnGet()
         {
             Products = await _product.GetAllProducts();

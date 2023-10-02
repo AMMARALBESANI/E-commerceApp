@@ -16,7 +16,7 @@ namespace E_Commerce_App.Models
 
         public double ProductPrice { get; set; }
 
-        public string ProductUrl { get; set; }
+        public string? ProductUrl { get; set; }
 
 
         public string? DepartmentName { get; set; } // we should change it 

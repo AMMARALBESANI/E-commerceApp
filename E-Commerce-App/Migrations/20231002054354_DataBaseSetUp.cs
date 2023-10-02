@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace E_Commerce_App.Migrations
 {
     /// <inheritdoc />
-    public partial class addAdminUser : Migration
+    public partial class DataBaseSetUp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,19 +67,25 @@ namespace E_Commerce_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductDTO",
+                name: "Orders",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    DepartmentID = table.Column<int>(type: "int", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SessionID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalPrice = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductDTO", x => x.ID);
+                    table.PrimaryKey("PK_Orders", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,6 +216,33 @@ namespace E_Commerce_App.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShoppingCartItem",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ProductPrice = table.Column<double>(type: "float", nullable: false),
+                    ProductUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductDiscount = table.Column<double>(type: "float", nullable: true),
+                    OrderID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItem", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItem_Orders_OrderID",
+                        column: x => x.OrderID,
+                        principalTable: "Orders",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
@@ -218,6 +251,7 @@ namespace E_Commerce_App.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
                     DepartmentID = table.Column<int>(type: "int", nullable: false),
                     Discount = table.Column<double>(type: "float", nullable: true),
                     ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -246,7 +280,7 @@ namespace E_Commerce_App.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "25017dc3-f039-4a44-8660-8d8053a4ba5a", "adminUser@example.com", true, false, null, "adminUser@EXAMPLE.COM", "ADMIN", "AQAAAAIAAYagAAAAED9aHAaSJsHdZDgrmFzs6BYNsU7bf/TaJIQUGV9xoDkfxuWwHWlAdrWuOAoPCRi/Qw==", "1234567890", false, "e41979f5-b5ea-41d2-85c0-2c10eea227a9", false, "Admin" });
+                values: new object[] { "1", 0, "4c7ff5b9-b047-4193-8037-21b3f6ff2e84", "adminUser@example.com", true, false, null, "adminUser@EXAMPLE.COM", "ADMIN", "AQAAAAIAAYagAAAAEFB+Exk//Opefn63I8VewHWV6BZwY8W8IdxAM6yLQ0f6cE5NqDqE36wup/b8RvG86A==", "1234567890", false, "4c123397-002d-4e93-862f-82b26327cea7", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Category",
@@ -294,21 +328,21 @@ namespace E_Commerce_App.Migrations
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "ID", "DepartmentID", "Discount", "ImageURL", "Name", "Price", "Quantity" },
+                columns: new[] { "ID", "Amount", "DepartmentID", "Discount", "ImageURL", "Name", "Price", "Quantity" },
                 values: new object[,]
                 {
-                    { 1, 1, null, null, "Samsung", 350, 23 },
-                    { 2, 1, null, null, "LG", 300, 40 },
-                    { 3, 2, null, null, "Beko", 250, 50 },
-                    { 4, 2, null, null, "Toshiba", 280, 40 },
-                    { 5, 3, null, null, "4 Person lunch Table", 40, 100 },
-                    { 6, 3, null, null, "8 Person lunch table", 70, 100 },
-                    { 7, 4, null, null, "Teval Pan", 20, 45 },
-                    { 8, 4, null, null, "Dishes", 15, 100 },
-                    { 9, 5, null, null, "Sheep meat", 15, 110 },
-                    { 10, 5, null, null, "Beef", 10, 80 },
-                    { 11, 6, null, null, "Sunny frying oil", 10, 80 },
-                    { 12, 6, null, null, "Durra Bean Box 500g", 1, 48 }
+                    { 1, 25, 1, null, null, "Samsung", 350, 23 },
+                    { 2, 25, 1, null, null, "LG", 300, 40 },
+                    { 3, 25, 2, null, null, "Beko", 250, 50 },
+                    { 4, 25, 2, null, null, "Toshiba", 280, 40 },
+                    { 5, 25, 3, null, null, "4 Person lunch Table", 40, 100 },
+                    { 6, 0, 3, null, null, "8 Person lunch table", 70, 100 },
+                    { 7, 25, 4, null, null, "Teval Pan", 20, 45 },
+                    { 8, 25, 4, null, null, "Dishes", 15, 100 },
+                    { 9, 25, 5, null, null, "Sheep meat", 15, 110 },
+                    { 10, 25, 5, null, null, "Beef", 10, 80 },
+                    { 11, 25, 6, null, null, "Sunny frying oil", 10, 80 },
+                    { 12, 25, 6, null, null, "Durra Bean Box 500g", 1, 48 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -359,6 +393,11 @@ namespace E_Commerce_App.Migrations
                 name: "IX_Product_DepartmentID",
                 table: "Product",
                 column: "DepartmentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartItem_OrderID",
+                table: "ShoppingCartItem",
+                column: "OrderID");
         }
 
         /// <inheritdoc />
@@ -383,7 +422,7 @@ namespace E_Commerce_App.Migrations
                 name: "Product");
 
             migrationBuilder.DropTable(
-                name: "ProductDTO");
+                name: "ShoppingCartItem");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -393,6 +432,9 @@ namespace E_Commerce_App.Migrations
 
             migrationBuilder.DropTable(
                 name: "Department");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Category");

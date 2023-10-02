@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce_App.Migrations
 {
     [DbContext(typeof(E_CommerceDBContext))]
-    [Migration("20231001202436_updateshoppinglist")]
-    partial class updateshoppinglist
+    [Migration("20231002054354_DataBaseSetUp")]
+    partial class DataBaseSetUp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,32 +60,6 @@ namespace E_Commerce_App.Migrations
                             ID = 3,
                             Name = "Food"
                         });
-                });
-
-            modelBuilder.Entity("E_Commerce_App.Models.DTO.ProductDTO", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("DepartmentID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ProductDTO");
                 });
 
             modelBuilder.Entity("E_Commerce_App.Models.Department", b =>
@@ -178,9 +152,19 @@ namespace E_Commerce_App.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SessionID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StreetAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -198,6 +182,9 @@ namespace E_Commerce_App.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<int>("DepartmentID")
                         .HasColumnType("int");
@@ -228,6 +215,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 1,
+                            Amount = 25,
                             DepartmentID = 1,
                             Name = "Samsung",
                             Price = 350,
@@ -236,6 +224,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 2,
+                            Amount = 25,
                             DepartmentID = 1,
                             Name = "LG",
                             Price = 300,
@@ -244,6 +233,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 3,
+                            Amount = 25,
                             DepartmentID = 2,
                             Name = "Beko",
                             Price = 250,
@@ -252,6 +242,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 4,
+                            Amount = 25,
                             DepartmentID = 2,
                             Name = "Toshiba",
                             Price = 280,
@@ -260,6 +251,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 5,
+                            Amount = 25,
                             DepartmentID = 3,
                             Name = "4 Person lunch Table",
                             Price = 40,
@@ -268,6 +260,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 6,
+                            Amount = 0,
                             DepartmentID = 3,
                             Name = "8 Person lunch table",
                             Price = 70,
@@ -276,6 +269,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 7,
+                            Amount = 25,
                             DepartmentID = 4,
                             Name = "Teval Pan",
                             Price = 20,
@@ -284,6 +278,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 8,
+                            Amount = 25,
                             DepartmentID = 4,
                             Name = "Dishes",
                             Price = 15,
@@ -292,6 +287,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 9,
+                            Amount = 25,
                             DepartmentID = 5,
                             Name = "Sheep meat",
                             Price = 15,
@@ -300,6 +296,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 10,
+                            Amount = 25,
                             DepartmentID = 5,
                             Name = "Beef",
                             Price = 10,
@@ -308,6 +305,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 11,
+                            Amount = 25,
                             DepartmentID = 6,
                             Name = "Sunny frying oil",
                             Price = 10,
@@ -316,6 +314,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 12,
+                            Amount = 25,
                             DepartmentID = 6,
                             Name = "Durra Bean Box 500g",
                             Price = 1,
@@ -334,7 +333,7 @@ namespace E_Commerce_App.Migrations
                     b.Property<string>("DepartmentName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderID")
+                    b.Property<int>("OrderID")
                         .HasColumnType("int");
 
                     b.Property<double?>("ProductDiscount")
@@ -351,13 +350,12 @@ namespace E_Commerce_App.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("ProductUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -437,16 +435,16 @@ namespace E_Commerce_App.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3f979d5d-bea1-44ae-a966-300a30a51c0a",
+                            ConcurrencyStamp = "4c7ff5b9-b047-4193-8037-21b3f6ff2e84",
                             Email = "adminUser@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "adminUser@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAELTMBR5e5UVcSf+eTcfle+8v5Ms64gl+JNKjpOrsCM/SwgbZOqqUgOtf+db2ragRnQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFB+Exk//Opefn63I8VewHWV6BZwY8W8IdxAM6yLQ0f6cE5NqDqE36wup/b8RvG86A==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9b29c0d5-8057-4d32-972f-e60aaf4128aa",
+                            SecurityStamp = "4c123397-002d-4e93-862f-82b26327cea7",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -706,7 +704,9 @@ namespace E_Commerce_App.Migrations
                 {
                     b.HasOne("E_Commerce_App.Models.Order", null)
                         .WithMany("Items")
-                        .HasForeignKey("OrderID");
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

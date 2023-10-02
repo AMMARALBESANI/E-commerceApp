@@ -124,7 +124,7 @@ namespace E_Commerce_App.Controllers
 
             var options = new SessionCreateOptions
             {
-                SuccessUrl = domain + $"Payment/OrderConfirmation/{cartViewModel.OrderInformation.ID}",
+                SuccessUrl = domain + $"Payment/OrderConfirmation",
                 CancelUrl = domain + "Payment/Index",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",

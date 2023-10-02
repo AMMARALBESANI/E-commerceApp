@@ -59,32 +59,6 @@ namespace E_Commerce_App.Migrations
                         });
                 });
 
-            modelBuilder.Entity("E_Commerce_App.Models.DTO.ProductDTO", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("DepartmentID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ProductDTO");
-                });
-
             modelBuilder.Entity("E_Commerce_App.Models.Department", b =>
                 {
                     b.Property<int>("ID")
@@ -206,6 +180,9 @@ namespace E_Commerce_App.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<int>("DepartmentID")
                         .HasColumnType("int");
 
@@ -235,6 +212,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 1,
+                            Amount = 25,
                             DepartmentID = 1,
                             Name = "Samsung",
                             Price = 350,
@@ -243,6 +221,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 2,
+                            Amount = 25,
                             DepartmentID = 1,
                             Name = "LG",
                             Price = 300,
@@ -251,6 +230,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 3,
+                            Amount = 25,
                             DepartmentID = 2,
                             Name = "Beko",
                             Price = 250,
@@ -259,6 +239,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 4,
+                            Amount = 25,
                             DepartmentID = 2,
                             Name = "Toshiba",
                             Price = 280,
@@ -267,6 +248,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 5,
+                            Amount = 25,
                             DepartmentID = 3,
                             Name = "4 Person lunch Table",
                             Price = 40,
@@ -275,6 +257,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 6,
+                            Amount = 0,
                             DepartmentID = 3,
                             Name = "8 Person lunch table",
                             Price = 70,
@@ -283,6 +266,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 7,
+                            Amount = 25,
                             DepartmentID = 4,
                             Name = "Teval Pan",
                             Price = 20,
@@ -291,6 +275,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 8,
+                            Amount = 25,
                             DepartmentID = 4,
                             Name = "Dishes",
                             Price = 15,
@@ -299,6 +284,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 9,
+                            Amount = 25,
                             DepartmentID = 5,
                             Name = "Sheep meat",
                             Price = 15,
@@ -307,6 +293,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 10,
+                            Amount = 25,
                             DepartmentID = 5,
                             Name = "Beef",
                             Price = 10,
@@ -315,6 +302,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 11,
+                            Amount = 25,
                             DepartmentID = 6,
                             Name = "Sunny frying oil",
                             Price = 10,
@@ -323,6 +311,7 @@ namespace E_Commerce_App.Migrations
                         new
                         {
                             ID = 12,
+                            Amount = 25,
                             DepartmentID = 6,
                             Name = "Durra Bean Box 500g",
                             Price = 1,
@@ -358,7 +347,6 @@ namespace E_Commerce_App.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("ProductUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
@@ -444,16 +432,16 @@ namespace E_Commerce_App.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3dd6824e-029e-4cd6-8da8-a8776c901f3e",
+                            ConcurrencyStamp = "4c7ff5b9-b047-4193-8037-21b3f6ff2e84",
                             Email = "adminUser@example.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "adminUser@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA8gyKxS2E5JxHsqgcL/Kzl3KwusCiqlacTdm9f5Vd5Viz1MD47lByGKMghihN3/sQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFB+Exk//Opefn63I8VewHWV6BZwY8W8IdxAM6yLQ0f6cE5NqDqE36wup/b8RvG86A==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3b5ac089-a365-4d40-b2a8-9c67b8b4fff0",
+                            SecurityStamp = "4c123397-002d-4e93-862f-82b26327cea7",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

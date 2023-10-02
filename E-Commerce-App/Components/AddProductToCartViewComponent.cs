@@ -37,7 +37,11 @@ namespace E_Commerce_App.Components
 				ProductUrl = product.ImageURL,
 				DepartmentName = product.Department.Name
 			};
+			if(cartItem.ProductUrl == null)
+			{
+				cartItem.ProductUrl = "https://lab29images.blob.core.windows.net/images/defaultImage.png";
 
+            }
 			_cart.AddToCart(Username, cartItem);
 
 			return View();

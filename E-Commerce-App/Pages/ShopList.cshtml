@@ -4,32 +4,26 @@
 
 @inject SignInManager<UserInterface> SignInManager
 
-
 @if (!SignInManager.IsSignedIn(User))
 {
     <div class="products position-absolute top-50 start-50 translate-middle">
         <p class="text-white fs-2 text-center">
-            To see the product you must sign in 
+            To see the products, you must sign in.
         </p>
         <div class="d-flex text-white justify-content-center">
-            <a href="/User/Register" class=" text-decoration-none m-0 text-info"> <p>please SignIn</p></a>
+            <a asp-page="/User/Register" class="text-decoration-none m-0 text-info"><p>Please Sign In</p></a>
             <p class="mx-2">or</p>
-            <a href="/User/login" class=" text-decoration-none m-0 text-info"> <p>Already Have An Account</p></a>
-
+            <a asp-page="/User/Login" class="text-decoration-none m-0 text-info"><p>Already Have An Account</p></a>
         </div>
-       
     </div>
-    
 }
 else
 {
     <div class="products">
         <div class="container">
-
             <h1 class="lg-title text-white">Special Products With Offers</h1>
-            <p class="text-center col-8 mx-auto my-1 text-dark text-white">A new Products of All categories now is available and on sales what are you waiting ? come on and choose your Product plant and buy it </p>
+            <p class="text-center col-8 mx-auto my-1 text-dark text-white">New products of all categories are now available on sale. What are you waiting for? Come on and choose your product, plant, and buy it.</p>
             <div class="product-items">
-
                 @foreach (var item in Model.Products)
                 {
                     var totalPrice = 0.0;
@@ -37,25 +31,21 @@ else
                     <div class="product">
                         <div class="product-content">
                             <div class="product-img">
-                                @if (item.ImageURL != null)
+                                @if (!string.IsNullOrEmpty(item.ImageURL))
                                 {
-                                    <img src="@item.ImageURL" alt="@item.Name">
+                                    <img src="@item.ImageURL" alt="@item.Name" />
                                 }
                                 else
                                 {
                                     <img src="https://lab29images.blob.core.windows.net/images/defaultImage.png" alt="@item.Name" />
                                 }
-
                             </div>
                             <div class="product-btns">
-                                <a asp-action="ProductDetails" asp-route-id="@item.ID" type="button" class="btn-cart d-flex justify-content-evenly align-items-center">
+                                <a asp-page-handler="ProductDetails" asp-route-id="@item.ID" class="btn-cart d-flex justify-content-evenly align-items-center">
                                     <span>Details</span>
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
-
                             </div>
-
-            
                         </div>
 
                         <div class="product-info">
@@ -68,46 +58,67 @@ else
                                         <span><i class="fas fa-star"></i></span>
                                         <span><i class="far fa-star"></i></span>
                                         <span><i class="far fa-star"></i></span>
+                                    </div>
+                                    <form method="post" asp-page-handler="AddToProduct" asp-route-productID="@item.ID">
+                                        @* <input class="form-control" asp-for="quantityNumber" value="1" min="1" max="@item.Amount" step="1"/> *@
+                                        <button id="AddProductToCart" type="submit" class="btn-cart d-flex justify-content-evenly align-items-center">
+                                            <span>Add To Cart</span>
+                                        </button>
+                                        @if (item.Amount == 0)
+                                        {
+                                            <p class="text-danger">Out of stock</p>
+                                        }
+                                        else if (item.Amount <= 5)
+                                        {
+                                            <div class="input-group mt-2">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-number shadow-none" data-type="minus">-</button>
+                                                </span>
+                                                <input class="form-control input-number text-center" step="1" type="number" value="1" min="1" max="@item.Amount" asp-for="quantityNumber" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-number shadow-none" data-type="plus">+</button>
+                                                </span>
+                                            </div>
+                                            <p class="text-danger text-center">last @item.Amount</p>
 
+                                        }
+                                        else
+                                        {
+                                            <div class="input-group mt-2">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-number shadow-none" data-type="minus">-</button>
+                                                </span>
+                                                <input class="form-control input-number text-center" step="1" type="number" value="1" min="1" max="@item.Amount" asp-for="quantityNumber" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-number shadow-none" data-type="plus">+</button>
+                                                </span>
+                                            </div>
+                                        }
+                                    </form>
                                 </div>
-                                <form method="post" asp-page-handler="AddToProduct" asp-route-productID="@item.ID">
-                                    <input class="form-control" asp-for="quantityNumber" value="1" min="1"/>
-                                    <button id="AddProductToCart" type="submit" class="btn-cart d-flex justify-content-evenly align-items-center">
-                                        <span>Add To Cart</span>
-                                    </button>
-                                </form>
+                                <a href="#" class="product-name">@item.Name</a>
+                                @if (item.Price >= 30 && item.Discount != null)
+                                {
+                                    totalPrice = item.Price - Convert.ToInt32(item.Price * item.Discount / 100);
+                                    <p class="product-price">$@item.Price</p>
+                                    <p class="product-price">$@totalPrice</p>
+                                }
+                                else
+                                {
+                                    totalPrice = item.Price;
+                                    <p class="product-price1">$@totalPrice</p>
+                                }
                             </div>
-                            <a href="#" class="product-name">@item.Name</a>
-                            @if (item.Price >= 30 && item.Discount != null)
+                            @if (item.Discount != null && item.Discount > 0)
                             {
-                                totalPrice = item.Price - Convert.ToInt32(item.Price * item.Discount / 100);
-                                <p class="product-price">$@item.Price</p>
-                                <p class="product-price">$@totalPrice</p>
+                                <div class="off-info">
+                                    <h2 class="sm-title">@item.Discount% off</h2>
+                                </div>
                             }
-                            else
-                            {
-                                totalPrice = item.Price;
-                                <p class="product-price1">$@totalPrice</p>
-                            }
-
                         </div>
-
-                        @if (item.Discount != null && item.Discount > 0)
-                        {
-
-                            <div class="off-info">
-                                <h2 class="sm-title">@item.Discount% off</h2>
-                            </div>
-                        }
                     </div>
                 }
-
             </div>
         </div>
     </div>
-
-    
 }
- 
-
-
